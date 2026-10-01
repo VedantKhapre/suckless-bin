@@ -1,0 +1,81 @@
+---
+import Expiry from "./Expiry.astro";
+import Characters from "./Characters.astro";
+import FileCount from "./FileCount.astro";
+import Download from "./Download.astro";
+---
+
+<div class="grid grid-cols-2 gap-6 p-4">
+    <Expiry />
+    <FileCount />
+    <Characters />
+</div>
+<div class="flex p-4">
+    <Download />
+</div>
+
+<script>
+    import { watchPaste } from "../../../lib/payload/api";
+
+    // Setting a value also reveals its row
+    const set = (field: string, value: string) => {
+        const el = document.querySelector(`[data-field="${field}"]`);
+        if (!el) return;
+        el.textContent = value;
+        el.closest("[data-row]")?.classList.remove("hidden");
+    };
+
+    function timeLeft(ms: number) {
+        if (ms <= 0) return "Expired";
+        const total = Math.floor(ms / 1000);
+        const h = Math.floor(total / 3600);
+        const m = Math.floor((total % 3600) / 60);
+        const s = total % 60;
+        return h > 0 ? `${h}h ${m}m` : `${m}m ${s}s`;
+    }
+
+    let timer: number | undefined;
+    function startTimer(expiresAt: number) {
+        if (timer) return;
+        const tick = () => {
+            const left = expiresAt - Date.now();
+            set("expiry", timeLeft(left));
+            if (left <= 0) clearInterval(timer);
+        };
+        timer = window.setInterval(tick, 1000);
+        tick();
+    }
+
+    watchPaste(
+        (paste) => {
+            set("title", paste.title);
+            startTimer(paste.expiresAt);
+
+            if (paste.filesMeta) set("files", String(paste.filesMeta.length));
+            if (paste.totalChars !== undefined) {
+                set("chars", paste.totalChars.toLocaleString());
+            }
+            if (paste.language) {
+                set(
+                    "language",
+                    paste.language === "plaintext" ? "Plain Text" : paste.language,
+                );
+            }
+        },
+        () => set("title", 
+          String.raw
+            `
+        ______________________________________
+       / Holy cow! This paste is gone. Either \
+       | 404 ate it or time turned it into    |
+       \ cheese.                              /
+        --------------------------------------
+               \   ^__^
+                \  (oo)\_______
+                   (__)\       )\/\
+                       ||----w |
+                       ||     ||
+            `
+        ),
+    );
+</script>

@@ -1,0 +1,16 @@
+---
+import Input from "../../ui/Input.astro";
+---
+
+<div>
+    <label for="title" class="mb-2 block font-ibm text-base">
+        Add Title [Required]
+    </label>
+    <Input
+        id="title"
+        name="title"
+        placeholder="BreakFast Code"
+        maxlength={40}
+        required
+    />
+</div>

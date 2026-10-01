@@ -1,0 +1,17 @@
+---
+import Box from "../ui/Box.astro";
+import Slash from "../ui/Slash.astro";
+import ThemeToggle from "../ui/ThemeToggle.astro";
+---
+
+<header class="sticky top-0 z-50 border-b border-line bg-background">
+    <Box>
+        <div class="flex w-full items-center justify-between gap-3 p-3">
+            <h1 class="font-ibm text-xl sm:text-3xl lg:text-4xl">
+                Pastebox
+            </h1>
+            <ThemeToggle />
+        </div>
+    </Box>
+</header>
+<Slash />

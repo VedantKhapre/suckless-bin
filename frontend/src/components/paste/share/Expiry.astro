@@ -1,0 +1,27 @@
+---
+import RadioPill from "./RadioPill.astro";
+
+const expirations = [
+    ["20m", "20 min"],
+    ["40m", "40 min"],
+    ["1h", "1 hr"],
+    ["2h", "2 hr"],
+    ["4h", "4 hr"],
+    ["8h", "8 hr"],
+];
+---
+
+<div>
+    <p class="mb-3 font-ibm text-base">Expiration [Default: 2 hours]</p>
+    <div class="flex flex-wrap gap-2">
+        {expirations.map(([value, label]) => (
+            <RadioPill
+                name="expiration"
+                value={value}
+                label={label}
+                checked={value === "2h"}
+                checkedClass="peer-checked:bg-teal peer-checked:text-on-teal"
+            />
+        ))}
+    </div>
+</div>

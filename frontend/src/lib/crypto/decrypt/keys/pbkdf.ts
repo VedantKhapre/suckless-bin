@@ -1,0 +1,1 @@
+export { deriveMaster } from "../../encrypt/keys/pbkdf";

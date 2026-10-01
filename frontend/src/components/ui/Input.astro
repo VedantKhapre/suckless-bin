@@ -1,0 +1,49 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"input"> {
+    toggle?: boolean;
+}
+
+const { toggle = false, type = "text", class: className, ...attrs } = Astro.props;
+const showToggle = toggle && type === "password";
+---
+
+<div class={`relative w-full min-w-0 ${className ?? ""}`}>
+    <input
+        {...attrs}
+        type={type}
+        class={`peer w-full min-w-0 rounded-md border border-line bg-transparent
+            px-2 py-1 font-ibm text-base outline-none focus:ring-1 focus:ring-sky-500
+            disabled:cursor-not-allowed disabled:opacity-40
+            ${showToggle ? "pr-14" : ""}`}
+    />
+    {showToggle && (
+        <button
+            type="button"
+            data-pw-toggle
+            class="absolute top-1/2 right-2 -translate-y-1/2 font-ibm text-sm peer-disabled:hidden"
+        >
+            [show]
+        </button>
+    )}
+</div>
+
+<script>
+    document.querySelectorAll<HTMLButtonElement>("[data-pw-toggle]").forEach((btn) => {
+        const input = btn.parentElement?.querySelector("input");
+        if (!input) return;
+
+        btn.addEventListener("click", () => {
+            input.type = input.type === "password" ? "text" : "password";
+            btn.textContent = input.type === "password" ? "[show]" : "[hide]";
+        });
+
+        new MutationObserver(() => {
+            if (input.disabled) {
+                input.type = "password";
+                btn.textContent = "[show]";
+            }
+        }).observe(input, { attributes: true, attributeFilter: ["disabled"] });
+    });
+</script>

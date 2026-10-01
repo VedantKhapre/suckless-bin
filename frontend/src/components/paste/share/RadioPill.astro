@@ -1,0 +1,21 @@
+---
+interface Props {
+    name: string;
+    value: string;
+    label: string;
+    checkedClass: string;
+    checked?: boolean;
+}
+
+const { name, value, label, checkedClass, checked = false } = Astro.props;
+---
+
+<label>
+    <input type="radio" name={name} value={value} checked={checked} class="peer hidden" />
+    <span
+        class={`block cursor-pointer rounded-md border border-line px-3 py-1.5
+            font-ibm text-sm transition hover:border-line ${checkedClass}`}
+    >
+        {label}
+    </span>
+</label>

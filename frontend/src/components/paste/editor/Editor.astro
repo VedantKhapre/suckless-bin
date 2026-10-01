@@ -1,0 +1,15 @@
+---
+import TopBar from "./TopBar.astro";
+---
+
+<div class="flex h-full w-full flex-col overflow-visible 2xl:min-h-0 2xl:overflow-hidden">
+    <TopBar />
+    <div
+        id="editor"
+        class="h-[55vh] w-full min-w-0 overflow-hidden 2xl:h-auto 2xl:min-h-0 2xl:flex-1"
+    ></div>
+</div>
+
+<script>
+    import "./editor.ts";
+</script>

@@ -1,0 +1,35 @@
+---
+import BoxThree from "../ui/BoxThree.astro";
+import Slash from "../ui/Slash.astro";
+import { FileUpload } from "../paste/upload/Upload.tsx";
+import Editor from "../paste/editor/Editor.astro";
+import Share from "../paste/share/Share.astro";
+
+---
+
+<BoxThree>
+    <div
+        slot="one"
+        class="flex w-full flex-col items-center justify-start gap-2 overflow-visible"
+    >
+        <h1 class="font-ibm text-xl 2xl:text-2xl text-center border-b border-line m-4 self-stretch truncate">
+            Upload Media
+        </h1>
+        <FileUpload client:load />
+    </div>
+
+    <div
+        slot="two"
+        class="w-full min-w-0 overflow-visible 2xl:h-full 2xl:min-h-0 2xl:overflow-hidden"
+    >
+        <Editor />
+    </div>
+
+    <div slot="three" class="w-full overflow-visible">
+        <h1 class="font-ibm text-xl 2xl:text-2xl text-center border-b border-line m-4 self-stretch truncate">
+            Create Paste
+        </h1>
+        <Share />
+    </div>
+</BoxThree>
+<Slash />

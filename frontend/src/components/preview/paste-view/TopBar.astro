@@ -1,0 +1,45 @@
+<div class="flex h-10 shrink-0 items-center justify-between gap-3 border-b border-line px-3">
+    <h1 id="view-title" class="min-w-0 truncate font-ibm text-xl">Loading…</h1>
+
+    <div id="view-meta" class="hidden min-w-0 items-center justify-end gap-3">
+        <span
+            id="view-count"
+            class="shrink-0 whitespace-nowrap font-ibm text-xs tabular-nums text-muted-foreground"
+        ></span>
+        <button
+            id="copy-btn"
+            class="flex rounded-md border border-line px-2 py-0.5 font-ibm text-sm"
+            >copy</button>
+        <span
+            id="view-language"
+            class="flex rounded-md border border-line px-2 py-0.5 font-ibm text-sm"
+        ></span>
+    </div>
+</div>
+
+<script>
+    import { watchPaste } from "../../../lib/payload/api";
+
+    const set = (id: string, value: string) => {
+        const el = document.querySelector(id);
+        if (el) el.textContent = value;
+    };
+
+    watchPaste(
+        (paste) => {
+            set("#view-title", paste.title);
+
+            if (paste.totalChars === undefined || !paste.language) return;
+            set("#view-count", `${paste.totalChars.toLocaleString()} chars`);
+            set(
+                "#view-language",
+                paste.language === "plaintext" ? "Plain Text" : paste.language,
+            );
+
+            const meta = document.querySelector("#view-meta");
+            meta?.classList.remove("hidden");
+            meta?.classList.add("flex");
+        },
+        () => set("#view-title", "Not found"),
+    );
+</script>

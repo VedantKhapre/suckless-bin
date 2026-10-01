@@ -1,0 +1,88 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #0a0a0b;
+  --line: #52525a;
+
+  --teal: #6ed5ca;
+  --teal-hover: #5fc4b9;
+  --on-teal: #0b1f1d;
+
+  --amber: #f4d088;
+  --amber-hover: #f1c069;
+  --on-amber: #000000;
+
+  --public: #8b87f5;
+  --on-public: #000000;
+  --private: #f07a8c;
+  --on-private: #000000;
+
+  --rose: #ff98a6;
+  --rose-hover: #f5879a;
+  --on-rose: #000000;
+
+  --danger: #dc2626;
+  --warning: #d97706;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #09090b;
+  --foreground: #fafafa;
+  --line: #3f3f46;
+
+  --teal: #5eead4;
+  --teal-hover: #2dd4bf;
+  --on-teal: #042f2e;
+
+  --amber: #fde68a;
+  --amber-hover: #fcd34d;
+  --on-amber: #422006;
+
+  --public: #a78bfa;
+  --on-public: #2e1065;
+  --private: #f472b6;
+  --on-private: #500724;
+
+  --rose: #fda4af;
+  --rose-hover: #fb7185;
+  --on-rose: #4c0519;
+
+  --danger: #f87171;
+  --warning: #fbbf24;
+}
+
+@theme inline {
+  --font-ibm: var(--font-ibm);
+  --color-line: var(--line);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-teal: var(--teal);
+  --color-teal-hover: var(--teal-hover);
+  --color-on-teal: var(--on-teal);
+
+  --color-amber: var(--amber);
+  --color-amber-hover: var(--amber-hover);
+  --color-on-amber: var(--on-amber);
+
+  --color-public: var(--public);
+  --color-on-public: var(--on-public);
+  --color-private: var(--private);
+  --color-on-private: var(--on-private);
+
+  --color-rose: var(--rose);
+  --color-rose-hover: var(--rose-hover);
+  --color-on-rose: var(--on-rose);
+
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}

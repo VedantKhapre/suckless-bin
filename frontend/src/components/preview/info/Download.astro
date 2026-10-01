@@ -1,0 +1,26 @@
+<button
+    id="download-all"
+    type="button"
+    class="hidden w-full rounded-md border border-line bg-teal px-4 py-2
+        font-ibm text-sm text-on-teal transition hover:border-line hover:bg-teal-hover"
+>
+    Download files
+</button>
+
+<script>
+    import { watchPaste } from "../../../lib/payload/api";
+    import { downloadFile } from "../../../lib/payload/download";
+
+    const button = document.querySelector<HTMLButtonElement>("#download-all");
+
+    watchPaste((paste) => {
+        const files = paste.filesMeta;
+        if (!button || !files?.length) return;
+        button.classList.remove("hidden");
+        button.onclick = async () => {
+            for (const [index, file] of files.entries()) {
+                await downloadFile(file, index);
+            }
+        };
+    });
+</script>

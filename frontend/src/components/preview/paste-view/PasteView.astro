@@ -1,0 +1,21 @@
+---
+import TopBar from "./TopBar.astro";
+import Unlock from "../unlock/Unlock.astro";
+---
+
+<div class="flex h-full w-full flex-col overflow-visible 2xl:min-h-0 2xl:overflow-hidden">
+    <TopBar />
+    <div class="relative h-[55vh] w-full min-w-0 2xl:h-auto 2xl:min-h-0 2xl:flex-1">
+        <div id="view" class="h-full w-full overflow-hidden"></div>
+        <div
+            id="unlock-overlay"
+            class="absolute inset-0 z-10 flex hidden items-center justify-center bg-background/80 p-4 backdrop-blur-sm"
+        >
+            <Unlock />
+        </div>
+    </div>
+</div>
+
+<script>
+    import "./view.ts";
+</script>
