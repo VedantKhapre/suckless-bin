@@ -75,7 +75,7 @@ function FileCard({ file, index }: { file: FileMeta; index: number }) {
   return (
     <div
       title={file.name}
-      className="group relative aspect-square w-32 min-w-28 shrink-0 overflow-hidden rounded-2xl bg-muted p-4"
+      className="group relative aspect-square w-32 min-w-28 shrink-0 overflow-hidden rounded-2xl border border-line bg-muted p-4"
     >
       <div className="flex h-full w-full flex-col items-start gap-1">
         <span className="line-clamp-2 text-sm font-medium">{file.name}</span>

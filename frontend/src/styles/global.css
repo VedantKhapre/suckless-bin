@@ -3,8 +3,8 @@
 
 :root {
   color-scheme: light;
-  --background: #ffffff;
-  --foreground: #0a0a0b;
+  --background: #f8f9fa;
+  --foreground: #202124;
   --line: #52525a;
 
   --teal: #6ed5ca;
@@ -30,29 +30,29 @@
 
 .dark {
   color-scheme: dark;
-  --background: #09090b;
-  --foreground: #fafafa;
-  --line: #3f3f46;
+  --background: #131314;
+  --foreground: #e3e3e3;
+  --line: #444746;
 
-  --teal: #5eead4;
-  --teal-hover: #2dd4bf;
-  --on-teal: #042f2e;
+  --teal: #80cbc4;
+  --teal-hover: #4db6ac;
+  --on-teal: #003733;
 
-  --amber: #fde68a;
-  --amber-hover: #fcd34d;
-  --on-amber: #422006;
+  --amber: #ffe082;
+  --amber-hover: #ffd54f;
+  --on-amber: #3e2723;
 
-  --public: #a78bfa;
-  --on-public: #2e1065;
-  --private: #f472b6;
-  --on-private: #500724;
+  --public: #bb86fc;
+  --on-public: #000000;
+  --private: #db5a5a;
+  --on-private: #000000;
 
-  --rose: #fda4af;
-  --rose-hover: #fb7185;
-  --on-rose: #4c0519;
+  --rose: #ffab91;
+  --rose-hover: #ff8a65;
+  --on-rose: #5d4037;
 
-  --danger: #f87171;
-  --warning: #fbbf24;
+  --danger: #ef5350;
+  --warning: #ffb300;
 }
 
 @theme inline {

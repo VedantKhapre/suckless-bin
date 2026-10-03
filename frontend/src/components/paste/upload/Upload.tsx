@@ -90,7 +90,7 @@ export function FileUpload() {
       >
         <FileUploadDropzone>
           <div className="flex flex-col items-center gap-1 text-center">
-            <div className="flex items-center justify-center rounded-full border p-2.5">
+            <div className="flex items-center justify-center rounded-full border border-line p-2.5">
               <Upload className="size-6 text-muted-foreground" />
             </div>
             <p className="text-base font-ibm">Drag & drop files here</p>
@@ -103,7 +103,7 @@ export function FileUpload() {
             <Button
               variant="outline"
               size="sm"
-              className="mt-2 w-fit"
+              className="mt-2 w-fit border-line"
               {...props}
             >
               Browse files

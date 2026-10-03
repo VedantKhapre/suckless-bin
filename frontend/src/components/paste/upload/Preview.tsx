@@ -76,7 +76,7 @@ function FileCard({ file }: { file: File }) {
       className={`group relative aspect-square w-32 min-w-28 shrink-0 overflow-hidden rounded-2xl ${
         isImage
           ? "border-none p-0"
-          : "flex-col items-start justify-center gap-1 bg-muted p-4"
+          : "flex-col items-start justify-center gap-1 border-line bg-muted p-4"
       }`}
     >
       {isImage ? <ImagePreview /> : <GenericFilePreview file={file} />}
