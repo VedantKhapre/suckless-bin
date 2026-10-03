@@ -2,14 +2,27 @@
 import Box from "../ui/Box.astro";
 import Slash from "../ui/Slash.astro";
 import ThemeToggle from "../ui/ThemeToggle.astro";
+import { Image } from "astro:assets";
+import logo from "@assets/logo.png";
 ---
 
 <header class="sticky top-0 z-50 border-b border-line bg-background">
     <Box>
         <div class="flex w-full items-center justify-between gap-3 p-3">
-            <h1 class="font-ibm text-xl sm:text-3xl lg:text-4xl">
-                Pastebox
-            </h1>
+            <div class="flex items-center gap-3">
+                <Image
+                alt="logo"
+                src={logo}
+                width={1254}
+                height={1254}
+                loading="eager"
+                fetchpriority="high"
+                class="h-8 w-8 object-contain sm:h-10 sm:w-10"
+                />
+                <h1 class="font-ibm text-xl sm:text-3xl lg:text-4xl">
+                    Pastebox
+                </h1>
+            </div>
             <ThemeToggle />
         </div>
     </Box>

@@ -15,6 +15,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@assets/*": ["src/assets/*"],
       "cn": ["./src/lib/cn.ts"]
     }
   }
