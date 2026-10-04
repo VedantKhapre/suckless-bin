@@ -29,12 +29,12 @@ export const MAX_PASTE_CHARS = 50000;
 const WARN_AT = 45000;
 
 const editorElement = document.querySelector<HTMLDivElement>("#editor");
-const languageSelect =
-  document.querySelector<HTMLSelectElement>("#language-select");
+const languageButton = document.querySelector<HTMLButtonElement>("#language-button");
+const languageDropdown = document.querySelector<HTMLDivElement>("#language-dropdown");
 const counter = document.querySelector("#paste-count");
 const warn = document.querySelector("#paste-warn");
 
-if (!editorElement || !languageSelect) {
+if (!editorElement || !languageButton || !languageDropdown) {
   throw new Error("Code editor elements not found");
 }
 
@@ -109,23 +109,32 @@ new MutationObserver(() =>
 });
 
 for (const language of languages) {
-  const option = document.createElement("option");
-  option.value = language.name;
+  const option = document.createElement("button");
+  option.type = "button";
+  option.className = "block w-full px-3 py-2 text-left font-ibm text-sm hover:bg-foreground/5 border-b border-line";
   option.textContent = language.name;
-  languageSelect.appendChild(option);
+  option.addEventListener("click", async () => {
+      languageButton.textContent = language.name;
+      languageDropdown.classList.add("hidden");
+      const support = await language.load();
+      view.dispatch({ effects: languageCompartment.reconfigure(support) });
+    });
+  languageDropdown.appendChild(option);
 }
 
-languageSelect.addEventListener("change", async () => {
-  const name = languageSelect.value;
-  if (!name) {
-    view.dispatch({ effects: languageCompartment.reconfigure([]) });
-    return;
+languageButton.addEventListener("click", () => {
+  languageDropdown.classList.toggle("hidden");
+});
+
+document.addEventListener("click", (e) => {
+  if (!languageDropdown.contains(e.target as Node) &&
+    !languageButton.contains(e.target as Node)) {
+    languageDropdown.classList.add("hidden");
   }
-  const language = languages.find((l) => l.name === name);
-  if (!language) return;
-  const support = await language.load();
-  view.dispatch({ effects: languageCompartment.reconfigure(support) });
 });
 
 export const getPasteText = () => view.state.doc.toString();
-export const getLanguage = () => languageSelect.value || "plaintext";
+export const getLanguage = () => 
+  languageButton.textContent === "Plain Text"
+  ? "plaintext"
+  : languageButton.textContent || "plaintext";

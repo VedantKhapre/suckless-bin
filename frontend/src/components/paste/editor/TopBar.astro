@@ -15,12 +15,17 @@
         </span>
 
         <div class="relative shrink-0">
-            <select
-                id="language-select"
-                class="h-7 w-36 appearance-none truncate rounded-md border border-line bg-transparent pr-7 pl-2 font-ibm text-sm outline-none focus-visible:border-line"
+            <button
+                id="language-button"
+                type="button"
+                class="h-7 w-36 appearance-none truncate rounded-md border border-line bg-transparent pr-7 pl-2 text-left font-ibm text-sm outline-none focus-visible:border-line"
             >
-                <option value="">Plain Text</option>
-            </select>
+                Plain Text
+            </button>
+            <div
+                id="language-dropdown"
+                class="absolute top-8 left-0 hidden max-h-48 w-36 overflow-y-auto rounded-md border border-line bg-background shadow-lg z-5 scrollbar-thin scrollbar-thumb-line scrollbar-track-background"
+            ></div>
             <svg
                 class="pointer-events-none absolute top-1/2 right-2 size-3.5 -translate-y-1/2 text-muted-foreground"
                 viewBox="0 0 24 24"
@@ -35,3 +40,4 @@
         </div>
     </div>
 </div>
+

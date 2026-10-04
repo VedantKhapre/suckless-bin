@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "tailwind-scrollbar";
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -47,9 +48,9 @@
   --private: #db5a5a;
   --on-private: #000000;
 
-  --rose: #ffab91;
+  --rose: #db5a5a;
   --rose-hover: #ff8a65;
-  --on-rose: #5d4037;
+  --on-rose: #000000;
 
   --danger: #ef5350;
   --warning: #ffb300;

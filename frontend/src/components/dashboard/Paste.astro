@@ -10,12 +10,14 @@ import Share from "../paste/share/Share.astro";
 <BoxThree>
     <div
         slot="one"
-        class="flex w-full flex-col items-center justify-start gap-2 px-4 pb-4 overflow-visible 2xl:h-full 2xl:overflow-y-auto 2xl:scrollbar-track-background"
+        class="flex w-full flex-col items-stretch overflow-visible 2xl:h-full 2xl:min-h-0"
     >
         <h1 class="font-ibm text-xl 2xl:text-2xl text-center border-b border-line m-4 self-stretch truncate shrink-0">
             Upload Media
         </h1>
-        <FileUpload client:load />
+        <div class="flex w-full flex-col items-center gap-2 px-4 pb-4 overflow-visible 2xl:min-h-0 2xl:flex-1 2xl:overflow-y-auto 2xl:scrollbar-thin 2xl:scrollbar-thumb-line 2xl:scrollbar-track-background">
+            <FileUpload client:load />
+        </div>
     </div>
 
     <div
