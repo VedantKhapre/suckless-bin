@@ -111,7 +111,7 @@ new MutationObserver(() =>
 for (const language of languages) {
   const option = document.createElement("button");
   option.type = "button";
-  option.className = "block w-full px-3 py-2 text-left font-ibm text-sm hover:bg-foreground/5 border-b border-line";
+  option.className = "block cursor-pointer w-full px-3 py-2 text-left font-ibm text-sm hover:bg-foreground/5 border-b border-line";
   option.textContent = language.name;
   option.addEventListener("click", async () => {
       languageButton.textContent = language.name;
