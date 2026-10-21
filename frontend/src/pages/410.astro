@@ -1,0 +1,43 @@
+---
+import AppLayout from "../layouts/BaseLayout.astro";
+import Box from "../components/ui/Box.astro";
+import Slash from "../components/ui/Slash.astro";
+import { Image } from "astro:assets";
+import BurnedArt from "@assets/burned-bin.png";
+
+export const title = "Page Not Found";
+---
+<AppLayout title={title}>
+    <Box class="flex flex-1 flex-col">
+        <div
+            class="flex flex-1 flex-col items-center justify-center gap-8 px-6 py-12 sm:gap-10 sm:py-16"
+        >
+            <Image
+                alt="Overflowing trash can stabbed by a giant straw"
+                src={BurnedArt}
+                width={1199}
+                height={1312}
+                loading="eager"
+                fetchpriority="high"
+                class="w-full max-w-md object-contain sm:max-w-lg lg:max-w-xl"
+            />
+
+            <div class="flex max-w-md flex-col items-center gap-3 text-center">
+                <h1 class="font-ibm text-3xl tracking-tight sm:text-4xl lg:text-5xl">
+                    Paste Burned
+                </h1>
+                <p class="font-ibm text-sm text-foreground/70 sm:text-base">
+                    This paste was burned on purpose, and is no longer available.
+                </p>
+                <a
+                    href="/"
+                    class="mt-2 inline-flex rounded-md border border-line bg-orange px-5 py-2.5
+                        font-ibm text-sm text-on-orange transition hover:border-line hover:bg-orange-hover"
+                >
+                    Back home
+                </a>
+            </div>
+        </div>
+    </Box>
+    <Slash />
+</AppLayout>

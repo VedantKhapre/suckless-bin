@@ -27,6 +27,10 @@
 
   --danger: #dc2626;
   --warning: #d97706;
+
+  --orange: #f38020;
+  --orange-hover: #e06f10;
+  --on-orange: #000000;
 }
 
 .dark {
@@ -54,6 +58,10 @@
 
   --danger: #ef5350;
   --warning: #ffb300;
+
+  --orange: #f38020;
+  --orange-hover: #faad3f;
+  --on-orange: #000000;
 }
 
 @theme inline {
@@ -81,6 +89,10 @@
 
   --color-danger: var(--danger);
   --color-warning: var(--warning);
+
+  --color-orange: var(--orange);
+  --color-orange-hover: var(--orange-hover);
+  --color-on-orange: var(--on-orange);
 }
 
 body {
