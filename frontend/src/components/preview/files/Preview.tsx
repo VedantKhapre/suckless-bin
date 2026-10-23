@@ -3,10 +3,13 @@
 import { FileText } from "lucide-react";
 import * as React from "react";
 
-import { API, getPaste, getSlug, watchPaste } from "../../../lib/payload/api";
-import type { FileMeta } from "../../../lib/payload/collect";
-import { getAuthKey } from "../../../lib/payload/private/unlock";
-import { b64 } from "../../../lib/crypto/shared/base64";
+import {
+  fetchFileBytes,
+  getSlug,
+  watchPaste,
+  type FileMeta,
+} from "@/lib/api";
+
 import { DownloadButton } from "./Download";
 
 function formatBytes(bytes: number) {
@@ -16,24 +19,6 @@ function formatBytes(bytes: number) {
   return `${(bytes / 1024 ** i).toFixed(i ? 1 : 0)} ${sizes[i]}`;
 }
 
-async function fetchImageBytes(slug: string, index: number): Promise<ArrayBuffer> {
-  const paste = await getPaste(slug);
-  const url = `${API}/paste/${slug}/file/${index}`;
-  if (paste.visibility === "public") {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("Download failed");
-    return res.arrayBuffer();
-  }
-  const authKey = getAuthKey(slug);
-  if (!authKey) throw new Error("Unlock the paste first");
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ authKey: b64(authKey) }),
-  });
-  if (!res.ok) throw new Error("Download failed");
-  return res.arrayBuffer();
-}
 
 function ImageCard({ file, index }: { file: FileMeta; index: number }) {
   const [url, setUrl] = React.useState<string | null>(null);
@@ -41,7 +26,7 @@ function ImageCard({ file, index }: { file: FileMeta; index: number }) {
   React.useEffect(() => {
     let live = true;
     let obj: string | null = null;
-    fetchImageBytes(getSlug(), index)
+    fetchFileBytes(getSlug(), index)
       .then((bytes) => {
         obj = URL.createObjectURL(new Blob([bytes], { type: file.type }));
         if (live) setUrl(obj);

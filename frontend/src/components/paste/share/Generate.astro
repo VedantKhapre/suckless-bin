@@ -19,9 +19,7 @@ import Link from "./Link.astro";
     import { collect, validate } from "../../../lib/payload/collect";
     import { buildPublicPayload } from "../../../lib/payload/public/build";
     import { buildPrivatePayload } from "../../../lib/payload/private/build";
-    import { sendPaste, sendFile } from "../../../lib/payload/api";
-
-    const PREVIEW_PATH = "/";
+    import { createPaste, uploadFile, pasteUrl, describeError } from "@/lib/api";
 
     const errorList = document.querySelector<HTMLUListElement>("#generate-errors");
     const showLink = (url: string | null) => 
@@ -51,17 +49,17 @@ import Link from "./Link.astro";
                     ? buildPublicPayload(collected)
                     : await buildPrivatePayload(collected);
 
-            const { slug } = await sendPaste(payload);
+            const { slug } = await createPaste(payload);
 
             await Promise.all(
                 collected.files.map(async (file, i) =>
-                    sendFile(slug, i, await file.arrayBuffer()),
+                    uploadFile(slug, i, await file.arrayBuffer()),
                 ),
             );
 
-            showLink(`${location.origin}${PREVIEW_PATH}${slug}`);
-        } catch {
-            showErrors(["Could not reach the server (is `bun run mock` running?)"]);
+            showLink(pasteUrl(slug));
+        } catch (error) {
+            showErrors([describeError(error)]);
         }
     });
 </script>

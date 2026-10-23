@@ -1,12 +1,6 @@
+import type { FileMeta, Visibility } from "@/lib/api";
 import { getPasteText, getLanguage } from "@/components/paste/editor/editor";
 import { getFiles } from "@/components/paste/upload/Upload";
-
-export type FileMeta = {
-  name: string;
-  size: number;
-  type: string;
-  lastModified: number;
-};
 
 export type Collected = {
   files: File[];
@@ -16,7 +10,7 @@ export type Collected = {
   language: string;
   title: string;
   expiration: string;
-  visibility: "public" | "private";
+  visibility: Visibility;
   password: string | null;
 };
 
@@ -57,6 +51,7 @@ export function validate(c: Collected): string[] {
   if (c.visibility === "private" && (c.password ?? "").length < 8) {
     errors.push("Password must be 8+ characters");
   }
+  if (c.text.length > 200_000) errors.push("Paste is too large (max 200,000 characters)");
 
   return errors;
 }

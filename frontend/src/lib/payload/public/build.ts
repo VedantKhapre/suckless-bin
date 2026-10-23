@@ -1,7 +1,7 @@
+import type { CreatePublicPasteRequest } from "@/lib/api";
 import type { Collected } from "../collect";
-import type { PublicPastePayload } from "./types";
 
-export function buildPublicPayload(c: Collected): PublicPastePayload {
+export function buildPublicPayload(c: Collected): CreatePublicPasteRequest {
   return {
     visibility: "public",
     title: c.title,

@@ -82,7 +82,7 @@ export function FileUpload() {
         value={files}
         onValueChange={handleChange}
         maxFiles={5}
-        maxSize={10 * 1024 * 1024}
+        maxSize={4 * 1024 * 1024}
         className="w-full max-w-md"
         onUpload={onUpload}
         onFileReject={onFileReject}
@@ -95,7 +95,7 @@ export function FileUpload() {
             </div>
             <p className="text-base font-ibm">Drag & drop files here</p>
           <p className="text-sm font-ibm text-muted-foreground">
-            Or Browse files (max 5, 10 MB each)
+            Or Browse files (max 5, 4 MB each)
           </p>
         </div>
         <FileUploadTrigger

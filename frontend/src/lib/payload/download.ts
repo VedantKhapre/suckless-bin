@@ -1,32 +1,8 @@
-import { API, getPaste, getSlug } from "./api";
-import type { FileMeta } from "./collect";
-import { getAuthKey } from "./private/unlock";
-import { b64 } from "../crypto/shared/base64";
+import { fetchFileBytes, getSlug, type FileMeta } from "@/lib/api";
 
-async function fetchBytes(slug: string, index: number): Promise<ArrayBuffer> {
-  const paste = await getPaste(slug);
-  const url = `${API}/paste/${slug}/file/${index}`;
-
-  if (paste.visibility === "public") {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("Download failed");
-    return res.arrayBuffer();
-  }
-
-  const authKey = getAuthKey(slug);
-  if (!authKey) throw new Error("Unlock the paste first");
-
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ authKey: b64(authKey) }),
-  });
-  if (!res.ok) throw new Error("Download failed");
-  return res.arrayBuffer();
-}
-
+/** Fetch an attached file and hand it to the browser's save dialog. */
 export async function downloadFile(file: FileMeta, index: number) {
-  const bytes = await fetchBytes(getSlug(), index);
+  const bytes = await fetchFileBytes(getSlug(), index);
   const url = URL.createObjectURL(new Blob([bytes], { type: file.type }));
 
   const link = document.createElement("a");

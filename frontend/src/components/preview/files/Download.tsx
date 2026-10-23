@@ -4,7 +4,7 @@ import { Download } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { downloadFile } from "../../../lib/payload/download";
-import type { FileMeta } from "../../../lib/payload/collect";
+import type { FileMeta } from "@/lib/api";
 
 export function DownloadButton({
   file,

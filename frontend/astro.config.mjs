@@ -3,10 +3,23 @@ import { defineConfig, fontProviders } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
-import node from '@astrojs/node';
+const SLUG = /^\/[A-Za-z]{6,10}\/?$/;
+
+/** @type {import('vite').Plugin} */
+const pasteSlugRewrite = {
+  name: "paste-slug-rewrite",
+  configureServer(server) {
+    server.middlewares.use((req, _res, next) => {
+      const [path, query] = (req.url ?? "").split("?");
+      if (SLUG.test(path)) req.url = "/paste" + (query ? `?${query}` : "");
+      next();
+    });
+  },
+};
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://sucklessbin.hivedant.in",
   integrations: [react()],
 
   fonts: [
@@ -19,10 +32,15 @@ export default defineConfig({
   ],
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss(), pasteSlugRewrite],
+    server: {
+      proxy: {
+        "/api": {
+          target: "http://localhost:8787",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+      },
+    },
   },
-
-  adapter: node({
-    mode: 'standalone'
-  })
 });

@@ -3,7 +3,7 @@ import { EditorState, Compartment, Prec } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { languages } from "@codemirror/language-data";
 import { oneDark } from "@codemirror/theme-one-dark";
-import { watchPaste } from "../../../lib/payload/api";
+import { watchPaste } from "@/lib/api";
 
 const darkTheme = [
   oneDark,
