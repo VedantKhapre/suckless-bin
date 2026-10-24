@@ -4,6 +4,10 @@ import Paste from "../components/dashboard/Paste.astro"
 
 export const title = "Suckless Bin";
 ---
+<noscript>
+    <meta http-equiv="refresh" content="0; url=/no-js" />
+</noscript>
+
 <AppLayout title={title}>
     <Paste />
 </AppLayout>

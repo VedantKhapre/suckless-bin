@@ -3,6 +3,11 @@
    import AppLayout from "../../layouts/BaseLayout.astro";
    export const title = "Suckless Bin";
    ---
+
+   <noscript>
+       <meta http-equiv="refresh" content="0; url=/no-js" />
+   </noscript>
+   
    <AppLayout title={title}>
        <Preview />
    </AppLayout>

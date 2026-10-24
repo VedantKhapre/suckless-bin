@@ -1,0 +1,42 @@
+---
+import AppLayout from "../../layouts/BaseLayout.astro";
+import Slash from "../../components/ui/Slash.astro";
+import { Image } from "astro:assets";
+import NoJs from "@assets/no-js.png";
+
+export const title = "JavaScript required";
+---
+<AppLayout title={title}>
+    <div class="flex w-full flex-1 flex-col border-b border-line">
+        <div
+            class="mx-auto flex w-[90%] max-w-4xl flex-1 flex-col items-center justify-center gap-6 border-x border-line px-6 py-8 sm:gap-8 sm:py-12"
+        >
+            <Image
+                alt="Overflowing trash can stabbed by a giant straw"
+                src={NoJs}
+                width={1280}
+                height={1280}
+                loading="eager"
+                fetchpriority="high"
+                class="max-h-[40vh] w-auto max-w-full object-contain"
+            />
+
+            <div class="flex max-w-md flex-col items-center gap-3 text-center">
+                <h1 class="font-ibm text-3xl tracking-tight sm:text-4xl lg:text-5xl">
+                    JavaScript is required
+                </h1>
+                <p class="font-ibm text-sm text-foreground/70 sm:text-base">
+                    Please enable JavaScript in your browser settings.
+                </p>
+                <a
+                    href="/"
+                    class="mt-2 inline-flex rounded-md border border-line bg-orange px-5 py-2.5
+                        font-ibm text-sm text-on-orange transition hover:border-line hover:bg-orange-hover"
+                >
+                    Back home
+                </a>
+            </div>
+        </div>
+    </div>
+    <Slash />
+</AppLayout>
