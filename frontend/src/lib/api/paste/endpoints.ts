@@ -15,8 +15,11 @@ const pastePath = (slug: string) => `/paste/${encodeURIComponent(slug)}`;
 // createPaste sends a create paste request to the server.
 // It returns { slug: string }
 // The request body is a CreatePasteRequest. This is a union of public and private request types.
-export const createPaste = (body: CreatePasteRequest) =>
-  request<CreatePasteResponse>("/paste", { method: "POST", json: body });
+export const createPaste = (body: CreatePasteRequest, turnstileToken: string) =>
+  request<CreatePasteResponse>("/paste", {
+    method: "POST",
+    json: { ...body, turnstileToken },
+  });
 
 // fetchPaste sends GET /paste/:slug.
 // It accepts an optional AbortSignal.

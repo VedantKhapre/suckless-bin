@@ -5,7 +5,9 @@ This module defines the API error type and converts errors into user-readable te
 export type ApiErrorKind =
   | "not_found" // 404
   | "gone" // 410 (burned or expired)
-  | "unauthorized" // 401 / 403 (wrong password or auth key)
+  | "invalid" // 400 (invalid request body)
+  | "unauthorized" // 401 (wrong password or auth key)
+  | "forbidden" // 403 (verification failed)
   | "too_large" // 413 / upload is too large
   | "rate_limited" // 429
   | "server" // 5xx
@@ -17,7 +19,9 @@ export type ApiErrorKind =
 const kindFromStatus = (status: number): ApiErrorKind => {
   if (status === 404) return "not_found";
   if (status === 410) return "gone";
-  if (status === 401 || status === 403) return "unauthorized";
+  if (status === 400) return "invalid";
+  if (status === 401) return "unauthorized";
+  if (status === 403) return "forbidden";
   if (status === 413) return "too_large";
   if (status === 429) return "rate_limited";
   if (status >= 500) return "server";
@@ -68,6 +72,10 @@ export function describeError(error: unknown): string {
       return "This paste has expired or was burned";
     case "unauthorized":
       return "Wrong password";
+    case "invalid":
+      return error.message;
+      case "forbidden":
+        return "Verification failed, please try again";
     case "too_large":
       return "That upload is too large";
     case "rate_limited":

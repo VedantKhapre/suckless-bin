@@ -3,11 +3,13 @@ import Link from "./Link.astro";
 ---
 
 <div>
+    <div id="turnstile-widget" class="mb-2 w-full"></div>
     <button
         id="generate-btn"
         type="button"
         class="w-full rounded-md border border-line bg-amber px-4 py-2
-            font-ibm text-sm text-on-amber transition hover:border-line hover:bg-amber-hover"
+            font-ibm text-sm text-on-amber transition hover:border-line hover:bg-amber-hover
+            disabled:cursor-wait disabled:opacity-70"
     >
         Create
     </button>
@@ -16,50 +18,5 @@ import Link from "./Link.astro";
 </div>
 
 <script>
-    import { collect, validate } from "../../../lib/payload/collect";
-    import { buildPublicPayload } from "../../../lib/payload/public/build";
-    import { buildPrivatePayload } from "../../../lib/payload/private/build";
-    import { createPaste, uploadFile, pasteUrl, describeError } from "@/lib/api";
-
-    const errorList = document.querySelector<HTMLUListElement>("#generate-errors");
-    const showLink = (url: string | null) => 
-      window.dispatchEvent(new CustomEvent("paste:link", { detail: url }));
-
-    function showErrors(errors: string[]) {
-        errorList?.replaceChildren(
-            ...errors.map((message) => {
-                const li = document.createElement("li");
-                li.textContent = message;
-                return li;
-            }),
-        );
-    }
-
-    document.querySelector("#generate-btn")?.addEventListener("click", async () => {
-        const collected = collect();
-        const errors = validate(collected);
-
-        showErrors(errors);
-        showLink(null);
-        if (errors.length > 0) return;
-
-        try {
-            const payload =
-                collected.visibility === "public"
-                    ? buildPublicPayload(collected)
-                    : await buildPrivatePayload(collected);
-
-            const { slug } = await createPaste(payload);
-
-            await Promise.all(
-                collected.files.map(async (file, i) =>
-                    uploadFile(slug, i, await file.arrayBuffer()),
-                ),
-            );
-
-            showLink(pasteUrl(slug));
-        } catch (error) {
-            showErrors([describeError(error)]);
-        }
-    });
+    import "./generate.ts";
 </script>

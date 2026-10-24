@@ -52,6 +52,7 @@ export function validate(c: Collected): string[] {
     errors.push("Password must be 8+ characters");
   }
   if (c.text.length > 200_000) errors.push("Paste is too large (max 200,000 characters)");
+  if (c.filesMeta.some((f) => f.size === 0)) errors.push("Empty files can't be uploaded");
 
   return errors;
 }
