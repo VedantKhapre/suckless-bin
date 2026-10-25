@@ -34,6 +34,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss(), pasteSlugRewrite],
     server: {
+      allowedHosts: [".trycloudflare.com"], // for tunnels remove on production
       proxy: {
         "/api": {
           target: "http://localhost:8787",
