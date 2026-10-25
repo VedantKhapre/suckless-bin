@@ -3,7 +3,31 @@ import { EditorState, Compartment, Prec } from "@codemirror/state";
 import { completeAnyWord } from "@codemirror/autocomplete";
 import { EditorView } from "@codemirror/view";
 import { languages } from "@codemirror/language-data";
+import { LanguageDescription } from "@codemirror/language";
 import { oneDark } from "@codemirror/theme-one-dark";
+import {hcl} from "codemirror-lang-hcl";
+
+// Languages not in @codemirror/language-data go here
+const customLanguages = [
+  LanguageDescription.of({
+    name: "HCL",
+    load: async () => hcl(),
+  }),
+];
+
+const PRIORITY = [
+  "JavaScript", "TypeScript", "Python", "HTML", "CSS",
+  "JSON", "SQL", "Java", "C++", "Go", "Rust", "HCL", "YAML", "Shell",
+];
+
+const rank = (name: string) => {
+  const i = PRIORITY.indexOf(name);
+  return i === -1 ? PRIORITY.length : i;
+};
+
+const allLanguages = [...languages, ...customLanguages].sort(
+  (a, b) => rank(a.name) - rank(b.name) || a.name.localeCompare(b.name),
+);
 
 const darkTheme = [
   oneDark,
@@ -108,7 +132,7 @@ new MutationObserver(() =>
   attributeFilter: ["class"],
 });
 
-for (const language of languages) {
+for (const language of allLanguages) {
   const option = document.createElement("button");
   option.type = "button";
   option.className = "block cursor-pointer w-full px-3 py-2 text-left font-ibm text-sm hover:bg-foreground/5 border-b border-line";
@@ -131,6 +155,45 @@ document.addEventListener("click", (e) => {
     !languageButton.contains(e.target as Node)) {
     languageDropdown.classList.add("hidden");
   }
+});
+
+// type-ahead
+let buffer = "";
+let bufferTimer: number | undefined;
+let active: HTMLElement | undefined;
+
+document.addEventListener("keydown", (e) => {
+  if (languageDropdown.classList.contains("hidden")) return;
+
+  if (e.key === "Escape") {
+    languageDropdown.classList.add("hidden");
+    return;
+  }
+
+  if (e.key === "Enter" && active) {
+    e.preventDefault();
+    active.click();
+    active = undefined;
+    return;
+  }
+
+  if (e.key.length !== 1 || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === " " && !buffer) return;
+
+  e.preventDefault();
+  buffer += e.key.toLowerCase();
+  clearTimeout(bufferTimer);
+  bufferTimer = window.setTimeout(() => (buffer = ""), 700);
+
+  const match = Array.from(languageDropdown.children).find((el) =>
+    el.textContent?.toLowerCase().startsWith(buffer),
+  ) as HTMLElement | undefined;
+
+  if (!match) return;
+  active?.classList.remove("bg-foreground/10");
+  active = match;
+  active.classList.add("bg-foreground/10");
+  active.scrollIntoView({ block: "nearest" });
 });
 
 export const getPasteText = () => view.state.doc.toString();
