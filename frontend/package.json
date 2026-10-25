@@ -47,6 +47,7 @@
     "codemirror": "^6.0.2",
     "codemirror-lang-hcl": "^0.2.0",
     "lucide-react": "^1.48.0",
+    "piixpal": "0.4",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "sonner": "^2.0.8",

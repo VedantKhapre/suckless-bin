@@ -39,6 +39,7 @@
         "codemirror": "^6.0.2",
         "codemirror-lang-hcl": "^0.2.0",
         "lucide-react": "^1.48.0",
+        "piixpal": "0.4",
         "react": "^19.3.0",
         "react-dom": "^19.3.0",
         "sonner": "^2.0.8",
@@ -773,6 +774,8 @@
     "picocolors": ["picocolors@1.1.1", "", {}, "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="],
 
     "picomatch": ["picomatch@4.0.7", "", {}, "sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA=="],
+
+    "piixpal": ["piixpal@0.4.0", "", { "peerDependencies": { "react": ">=17", "svelte": ">=3", "vue": ">=3" }, "optionalPeers": ["react", "svelte", "vue"] }, "sha512-KvWiYCtQxPgDb+7frJGnhtqxyijlSbNY9IZx34WUnInEdIDbELQhRLk0A1XqR3UgBKq3LukGmd8fVdoXLKn1xw=="],
 
     "postcss": ["postcss@8.5.28", "", { "dependencies": { "nanoid": "^3.3.18", "picocolors": "^1.1.1", "source-map-js": "^1.2.1" } }, "sha512-RRuzqDtt5Y9h3quz5hWhK+TPnsmVs6WwSU6LkJMeY4HstUEDuYTG8UJSdawMRzmzAtV+KEoG8N3Qg2qLy5vM/A=="],
 
