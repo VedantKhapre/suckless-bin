@@ -29,16 +29,29 @@ resource "aws_cloudfront_distribution" "frontend" {
   default_cache_behavior {
     allowed_methods = ["GET", "HEAD", "OPTIONS"]
     cached_methods  = ["GET", "HEAD"]
+    compress        = true
 
     target_origin_id         = "${var.project_name}-frontend-origin"
     viewer_protocol_policy   = "redirect-to-https"
     cache_policy_id          = data.aws_cloudfront_cache_policy.optimized.id
     origin_request_policy_id = data.aws_cloudfront_origin_request_policy.cors_s3.id
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.site_router.arn
+    }
+  }
+
+  custom_error_response {
+    error_code            = 403
+    response_code         = 404
+    response_page_path    = "/404.html"
+    error_caching_min_ttl = 60
   }
 
   custom_error_response {
     error_code            = 404
-    response_code         = 200
+    response_code         = 404
     response_page_path    = "/404.html"
     error_caching_min_ttl = 60
   }
@@ -60,4 +73,12 @@ resource "aws_cloudfront_distribution" "frontend" {
   tags = merge({
     Name = "${var.project_name}-distribution"
   }, local.common_tags)
+}
+
+resource "aws_cloudfront_function" "site_router" {
+  name    = "${var.project_name}-site-router"
+  runtime = "cloudfront-js-2.0"
+  comment = "Change /<slug> to /paste/index.html. Add index.html to folder paths."
+  publish = true
+  code    = file("${path.module}/functions/site-router.js")
 }

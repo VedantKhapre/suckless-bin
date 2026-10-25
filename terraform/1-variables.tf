@@ -22,16 +22,22 @@ variable "cloudflare_zone_id" {
   # default     = ""
 }
 
+variable "root_domain" {
+  type        = string
+  description = "The root domain name for the cloudflare DNS record"
+  default     = "hivedant.in"
+}
+
 variable "domain_name" {
   type        = string
   description = "The domain name for the cloudflare DNS record"
   default     = "sucklessbin.hivedant.in"
 }
 
-variable "root_domain" {
+variable "api_domain_name" {
   type        = string
-  description = "The root domain name for the cloudflare DNS record"
-  default     = "hivedant.in"
+  description = "Domain for the API"
+  default     = "api.sucklessbin.hivedant.in"
 }
 
 variable "environment" {
