@@ -66,3 +66,8 @@ variable "price_class" {
   description = "The price class for the CloudFront distribution"
   default     = "PriceClass_100"
 }
+
+variable "files_retention_days" {
+  type    = number
+  default = 1
+}
