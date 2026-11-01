@@ -71,3 +71,23 @@ variable "files_retention_days" {
   type    = number
   default = 1
 }
+
+variable "lambda_memory_mb" {
+  type    = number
+  default = 128
+}
+
+variable "log_retention_days" {
+  type    = number
+  default = 14
+}
+
+variable "daily_paste_limit" {
+  type    = number
+  default = 5
+}
+
+variable "turnstile_secret_key" {
+  type      = string
+  sensitive = true
+}
