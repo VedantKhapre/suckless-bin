@@ -79,7 +79,9 @@ export function describeError(error: unknown): string {
     case "too_large":
       return "That upload is too large";
     case "rate_limited":
-      return "Too many requests, try again shortly";
+      return error.message.startsWith("Request failed")
+        ? "Too many requests, try again shortly"
+        : error.message;
     case "timeout":
       return "The server took too long to respond";
     case "network":
