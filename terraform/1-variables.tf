@@ -91,3 +91,15 @@ variable "turnstile_secret_key" {
   type      = string
   sensitive = true
 }
+
+variable "api_routes" {
+  type = list(string)
+  default = [
+    "POST /paste",
+    "GET /paste/{slug}",
+    "POST /paste/{slug}/unlock",
+    "PUT /paste/{slug}/file/{index}",
+    "GET /paste/{slug}/file/{index}",
+    "POST /paste/{slug}/file/{index}",
+  ]
+}
