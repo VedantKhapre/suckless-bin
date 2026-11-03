@@ -31,10 +31,43 @@ export default defineConfig({
     },
   ],
 
+  security: {
+    csp: {
+      algorithm: "SHA-256",
+      directives: [
+        "default-src 'self'",
+        "img-src 'self' data: blob:",
+        "media-src 'self' blob:",
+        "connect-src 'self' https://sucklessbin.hivedant.in https://api.sucklessbin.hivedant.in https://challenges.cloudflare.com",
+        "font-src 'self'",
+        "object-src 'none'",
+        "base-uri 'none'",
+        "form-action 'self'",
+        "frame-src https://challenges.cloudflare.com",
+        "worker-src 'self' blob:",
+        "manifest-src 'self'",
+      ],
+      scriptDirective: {
+        resources: [
+          "'self'",
+          "'wasm-unsafe-eval'",
+          "https://challenges.cloudflare.com",
+        ],
+      },
+      styleDirective: {
+        resources: [
+          "'self'",
+          { resource: "'self'", kind: "element" },
+          { resource: "'unsafe-inline'", kind: "element" },
+        ],
+      },
+    },
+  },
+
   vite: {
     plugins: [tailwindcss(), pasteSlugRewrite],
     server: {
-      allowedHosts: [".trycloudflare.com"], // for tunnels remove on production
+      // allowedHosts: [".trycloudflare.com"], // for tunnels remove on production
       proxy: {
         "/api": {
           target: "http://localhost:8787",
