@@ -5,7 +5,7 @@ process.env.FILES_BUCKET ??= "mock-files";
 process.env.AUTH_PEPPER ??= "dev-only-pepper-dev-only-pepper-dev-only";
 process.env.TURNSTILE_SECRET_KEY ??= "dev-only-secret";
 process.env.DAILY_PASTE_LIMIT ??= "2";
-process.env.UNLOCK_MAX_ATTEMPTS ??= "1000";
+process.env.UNLOCK_MAX_ATTEMPTS ??= "5";
 
 const { handler, routes } = await import(`${lambdaFolder}/index.mjs`);
 const { ddb, s3 } = await import(`${lambdaFolder}/data/clients.mjs`);
