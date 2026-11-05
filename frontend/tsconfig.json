@@ -5,7 +5,8 @@
     "**/*"
   ],
   "exclude": [
-    "dist"
+    "dist",
+    "mock"
   ],
   "compilerOptions": {
     "target": "ES2020",
