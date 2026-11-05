@@ -87,6 +87,11 @@ variable "daily_paste_limit" {
   default = 5
 }
 
+variable "unlock_max_attempts" {
+  type    = number
+  default = 7
+}
+
 variable "turnstile_secret_key" {
   type      = string
   sensitive = true

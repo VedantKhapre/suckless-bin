@@ -1,12 +1,16 @@
 data "archive_file" "api" {
   type        = "zip"
   source_dir  = "${path.root}/../lambda/src"
-  output_path = "${path.root}/.build/api.zip"
+  output_path = "${path.root}/lambda.zip"
 }
 
 resource "random_password" "auth_pepper" {
   length  = 48
   special = false
+
+  lifecycle {
+    ignore_changes = [result]
+  }
 }
 
 resource "aws_cloudwatch_log_group" "api_lambda" {
@@ -33,6 +37,7 @@ resource "aws_lambda_function" "api" {
       AUTH_PEPPER          = random_password.auth_pepper.result
       TURNSTILE_SECRET_KEY = var.turnstile_secret_key
       DAILY_PASTE_LIMIT    = tostring(var.daily_paste_limit)
+      UNLOCK_MAX_ATTEMPTS    = tostring(var.unlock_max_attempts)
     }
   }
 
