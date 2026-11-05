@@ -1,0 +1,58 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "destroy" to confirm'
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: terraform
+  cancel-in-progress: false
+
+jobs:
+  terraform-destroy:
+    name: Terraform Destroy
+    if: inputs.confirm == 'destroy'
+    runs-on: ubuntu-latest
+    environment: production
+
+    env:
+      TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+      TF_VAR_turnstile_secret_key: ${{ secrets.TURNSTILE_SECRET_KEY }}
+
+    defaults:
+      run:
+        working-directory: terraform/
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+
+      - name: Terraform init
+        run: terraform init -input=false
+
+      - name: Verify state is not empty
+        run: |
+          COUNT=$(terraform state list | wc -l)
+          echo "Resources in state: $COUNT"
+          test "$COUNT" -gt 0
+
+      - name: Terraform destroy
+        run: terraform destroy -input=false -auto-approve
