@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "files" {
   bucket = "${var.project_name}-files-${random_id.bucket_suffix.hex}"
+  force_destroy = true
 
   tags = merge({
     Name = "${var.project_name}-files"
